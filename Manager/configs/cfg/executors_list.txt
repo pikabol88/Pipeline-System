@@ -1,0 +1,4 @@
+mekhails.executor.Reverser=libs/Shagvaliev/configs_workers_my/executorConfig.txt
+ru.spbstu.SmirnovaD.CycleShiftEncoder=libs/Smirnova/app1config1.txt
+executor.Worker=libs/Marin/my_cfg/executor.txt
+BinaryShift=configs/cfg/my_configs/executor_decoder.txt

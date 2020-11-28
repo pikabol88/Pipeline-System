@@ -1,0 +1,7 @@
+READER_CFG=configs/cfg/my_configs/reader_config.txt
+READER_NAME=Reader
+EXECUTORS_FILE=configs/cfg/my_executor.txt
+WRITER_CFG=libs/Shagvaliev/configs_workers_my/writerConfig.txt
+WRITER_NAME=mekhails.writer.ByteWriter
+INPUT_FILE=configs/cfg/input.txt
+OUTPUT_FILE=configs/cfg/output.txt
