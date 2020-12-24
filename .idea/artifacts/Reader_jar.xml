@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Reader_jar</output-path>
     <root id="archive" name="Reader.jar">
       <element id="module-output" name="Reader" />
+      <element id="module-output" name="Manager" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Manager/artefacts/Reader.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

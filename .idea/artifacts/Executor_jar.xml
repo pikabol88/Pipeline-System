@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Executor_jar</output-path>
     <root id="archive" name="Executor.jar">
       <element id="module-output" name="Executor" />
+      <element id="module-output" name="Manager" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Manager/artefacts/Executor.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

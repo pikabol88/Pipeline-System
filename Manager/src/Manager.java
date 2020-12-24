@@ -1,5 +1,3 @@
-//import com.Viktor.main.Reader;
-//import mekhails.reader.ByteReader;
 import ru.spbstu.pipeline.*;
 import ru.spbstu.pipeline.RC;
 
@@ -29,23 +27,21 @@ public class Manager implements IConfigurable {
 
     private final Logger LOGGER;
 
-    private Configer exConfig;
+    private Configer executorsConfig;
     private Configer config;
 
-    private final String mainCfg;
+    private String mainCfg;
     private String executorsCfg;
 
     private FileInputStream input;
     private FileOutputStream output;
 
-    private RC errorState;
+    private RC errorState = RC.CODE_SUCCESS;
 
-    private IExecutable[] allExecutors;
+    private IConfigurable[] allExecutors;
     private int numOfExecutors;
-    private IReader reader ;
-    private IWriter writer ;
-
-    private byte[] bytes;
+    private IConfigurable reader;
+    private IConfigurable writer;
 
     public boolean checkSuccess() {
         if (errorState!=RC.CODE_SUCCESS) {
@@ -66,7 +62,7 @@ public class Manager implements IConfigurable {
         if(!checkSuccess()){return;}
         errorState = setWriter();
         if(!checkSuccess()){return;}
-        errorState = CreatePipeline(exConfig.config);
+        errorState = CreatePipeline(executorsConfig.config);
     }
 
 
@@ -78,12 +74,12 @@ public class Manager implements IConfigurable {
     }
 
     private RC setExecutorsConfig(String cfg){
-        exConfig = new Configer(cfg, EXECUTORS_CONFIG_GRAMMAR.values(),GRAMMAR_SEPARATOR, false,LOGGER);
-        return exConfig.errorState;
+        executorsConfig = new Configer(cfg, EXECUTORS_CONFIG_GRAMMAR.values(),GRAMMAR_SEPARATOR, false,LOGGER);
+        return executorsConfig.errorState;
     }
 
     private RC setReader(){
-        reader = (IReader) CreateExecutable(config.config.get(CONFIG_GRAMMAR.READER_NAME.toString()),config.config.get(CONFIG_GRAMMAR.READER_CFG.toString()));
+        reader = CreateExecutable(config.config.get(CONFIG_GRAMMAR.READER_NAME.toString()),config.config.get(CONFIG_GRAMMAR.READER_CFG.toString()));
         try {
             LOGGER.log(Level.INFO, "opening input stream");
             input = new FileInputStream(config.config.get(CONFIG_GRAMMAR.INPUT_FILE.toString()));
@@ -91,12 +87,12 @@ public class Manager implements IConfigurable {
             LOGGER.log(Level.SEVERE, "failed to create the input stream");
             return RC.CODE_INVALID_INPUT_STREAM;
         }
-        reader.setInputStream(input);
+        ((IReader)reader).setInputStream(input);
         return RC.CODE_SUCCESS;
     }
 
-    private RC setWriter(){
-        writer = (IWriter) CreateExecutable(config.config.get(CONFIG_GRAMMAR.WRITER_NAME.toString()),config.config.get(CONFIG_GRAMMAR.WRITER_CFG.toString()));
+    private RC setWriter() {
+        writer = CreateExecutable(config.config.get(CONFIG_GRAMMAR.WRITER_NAME.toString()),config.config.get(CONFIG_GRAMMAR.WRITER_CFG.toString()));
         try {
             LOGGER.log(Level.INFO, "opening output stream");
             output = new FileOutputStream(config.config.get(CONFIG_GRAMMAR.OUTPUT_FILE.toString()));
@@ -104,19 +100,19 @@ public class Manager implements IConfigurable {
             LOGGER.log(Level.SEVERE, "failed to create the input stream");
             return RC.CODE_INVALID_OUTPUT_STREAM;
         }
-        writer.setOutputStream(output);
+        ((IWriter)writer).setOutputStream(output);
         return RC.CODE_SUCCESS;
     }
 
 
-    private IExecutable CreateExecutable(String className, String configPath) {
-        IExecutable pipelineProcess;
+    private IConfigurable CreateExecutable(String className, String configPath) {
+        IConfigurable pipelineProcess;
         try {
             LOGGER.log(Level.INFO, "trying to create executor with name " + className);
             Class obj = Class.forName(className);
             Class[] construct = new Class[]{Logger.class};
-            pipelineProcess = (IExecutable)obj.getConstructor(construct).newInstance(this.LOGGER);
-            if (((IConfigurable)pipelineProcess).setConfig(configPath)==RC.CODE_SUCCESS){
+            pipelineProcess = (IConfigurable) obj.getConstructor(construct).newInstance(this.LOGGER);
+            if (pipelineProcess.setConfig(configPath)==RC.CODE_SUCCESS){
                 return pipelineProcess;
             }
             return  null;
@@ -127,7 +123,7 @@ public class Manager implements IConfigurable {
     }
 
     private RC CreatePipeline(Map<String, String> executors){
-        allExecutors = new IExecutable[executors.size()];
+        allExecutors = new IExecutor[executors.size()];
         numOfExecutors = executors.size();
         RC state;
         int i = 0;
@@ -142,26 +138,29 @@ public class Manager implements IConfigurable {
             }
             i++;
         }
-
         if (numOfExecutors == 0){
-            reader.setConsumer(writer);
-            writer.setProducer(reader);
+            ((IPipelineStep)reader).setConsumer((IConsumer) writer);
+            ((IPipelineStep)writer).setProducer((IProducer) reader);
         } else {
-            IExecutable curExecutor = allExecutors[0];
-            reader.setConsumer(curExecutor);
+            IConfigurable curExecutor = allExecutors[0];
+            ((IPipelineStep)reader).setConsumer((IConsumer)curExecutor);
+            ((IPipelineStep)curExecutor).setProducer((IProducer) reader);
             for (i = 1; i<numOfExecutors;i++) {
                 LOGGER.log(Level.SEVERE, "determinate the oder for executor: " + curExecutor);
-                state = ((IPipelineStep)curExecutor).setConsumer(allExecutors[i]);
+                state =  ((IPipelineStep)curExecutor).setConsumer((IConsumer)allExecutors[i]);
                 if(state!=RC.CODE_SUCCESS){  return state; }
-                state = ((IPipelineStep)allExecutors[i]).setProducer(curExecutor);
+                state =  ((IPipelineStep)allExecutors[i]).setProducer((IProducer)curExecutor);
                 if(state!=RC.CODE_SUCCESS){  return state; }
                 curExecutor=allExecutors[i];
             }
-            state = ((IPipelineStep)curExecutor).setConsumer(writer);
+            state = ((IPipelineStep)curExecutor).setConsumer((IConsumer) writer);
             if(state!=RC.CODE_SUCCESS){  return state; }
-            state = writer.setProducer(curExecutor);
+            state = ((IPipelineStep)writer).setProducer((IProducer)curExecutor);
             if(state!=RC.CODE_SUCCESS){  return state; }
         }
+        String str = "pipleline was successfully built, the worker order:";
+        for(i = 0;i<allExecutors.length;i++) str+="\n\t"+ (i+1) + ". " + allExecutors[i];
+        LOGGER.log(Level.INFO, str);
         return RC.CODE_SUCCESS;
     }
 
@@ -184,7 +183,7 @@ public class Manager implements IConfigurable {
 
     public void Run() {
         LOGGER.log(Level.INFO, "start running pipeline");
-        reader.execute(bytes);
+        ((IReader)reader).execute();
         if(closeStreams()!=RC.CODE_SUCCESS){
             LOGGER.log(Level.SEVERE, "failed to close the stream");
         } else {

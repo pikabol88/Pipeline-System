@@ -1,9 +1,9 @@
 <component name="libraryTable">
-  <library name="Executor">
+  <library name="executor">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Manager/artifacts/Executor_jar/Executor.jar!/" />
-      <root url="jar://$PROJECT_DIR$/Manager/artifacts/Reader_jar/Reader.jar!/" />
-      <root url="jar://$PROJECT_DIR$/Manager/artifacts/Writer_jar/Writer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Timofeev/executor.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Timofeev/reader.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Timofeev/writer.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

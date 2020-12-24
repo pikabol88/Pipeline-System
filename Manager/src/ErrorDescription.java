@@ -1,6 +1,6 @@
 import ru.spbstu.pipeline.RC;
 
-public  class ErrorDescription {
+public class ErrorDescription {
     static String getDescription(RC error){
         switch (error){
             case CODE_SUCCESS:

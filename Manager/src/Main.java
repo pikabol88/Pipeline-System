@@ -1,4 +1,5 @@
 import ru.spbstu.pipeline.RC;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.LogManager;

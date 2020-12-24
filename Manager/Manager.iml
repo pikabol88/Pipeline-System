@@ -115,6 +115,11 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="interfaces" level="project" />
+    <orderEntry type="library" name="BaseWorker" level="project" />
     <orderEntry type="library" name="Executor" level="project" />
+    <orderEntry type="library" name="Reader" level="project" />
+    <orderEntry type="library" name="Writer" level="project" />
+    <orderEntry type="library" name="executor" level="project" />
   </component>
 </module>

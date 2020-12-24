@@ -1,0 +1,1 @@
+table_file = Manager/libs/Timofeev/configs/table.txt

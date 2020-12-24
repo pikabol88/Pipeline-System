@@ -1,4 +1,4 @@
-READER_CFG=Manager/libs/Marin/my_cfg/reader_cfg.txt
+READER_CFG=Manager/libs/Marin/configs/reader_cfg.txt
 READER_NAME=reader.Worker
 EXECUTORS_FILE=Manager/configs/cfg/my_executor_encode.txt
 WRITER_CFG=Manager/configs/cfg/my_configs/writer_config.txt

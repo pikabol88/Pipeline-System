@@ -1,7 +1,7 @@
-import ru.spbstu.pipeline.IExecutable;
-import ru.spbstu.pipeline.IExecutor;
-import ru.spbstu.pipeline.RC;
+import ru.spbstu.pipeline.*;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,36 +13,68 @@ public class BinaryShift implements IExecutor {
     public static final String GRAMMAR_SEPARATOR = "=";
 
     private Configer config;
+    private IConsumer consumer;
+    private IProducer producer;
+    private IMediator mediator;
+
+    private final Logger LOGGER;
+
+    private byte[] processed;
+    private final TYPE[] supportedFormats = {TYPE.BYTE};
+
     static final int BITS = 8;
     static final int MASK = 0xFF;
-    private IExecutable consumer;
-    private IExecutable producer;
-    private final Logger LOGGER;
 
     public BinaryShift(Logger logger){
         LOGGER=logger;
     }
 
     @Override
-    public RC setConsumer(IExecutable c) {
-        if(c==null) {
+    public RC setConfig(String cfg) {
+        config = new Configer(cfg,BINARY_SHIFT_GRAMMAR.values(),GRAMMAR_SEPARATOR, true, LOGGER);
+        return config.errorState;
+    }
+
+    @Override
+    public RC setConsumer(IConsumer iConsumer) {
+        if(iConsumer == null) {
             LOGGER.log(Level.SEVERE, "invalid consumer object");
             return RC.CODE_INVALID_ARGUMENT;
         }
-        consumer = c;
+        consumer = iConsumer;
         return RC.CODE_SUCCESS;
     }
 
     @Override
-    public RC setProducer(IExecutable p) {
-        if(p==null) {
+    public RC setProducer(IProducer iProducer) {
+        if(iProducer == null) {
             LOGGER.log(Level.SEVERE, "invalid producer object");
             return RC.CODE_INVALID_ARGUMENT;
         }
-        return RC.CODE_SUCCESS;
+        producer = iProducer;
+        TYPE type = typeIntersection();
+        if(type!=null) {
+            mediator = producer.getMediator(type);
+            return RC.CODE_SUCCESS;
+        }
+        return RC.CODE_FAILED_PIPELINE_CONSTRUCTION;
     }
 
-    static public RC binaryShift(byte[] bytes, int shift){
+    @Override
+    public RC execute() {
+        RC errorState = RC.CODE_SUCCESS;
+        processed = (byte[]) mediator.getData();
+        if(processed!=null) {
+            errorState = binaryShift(processed, Integer.parseInt(config.config.get(BINARY_SHIFT_GRAMMAR.SHIFT_SIZE.toString())));
+        }
+        if(errorState == RC.CODE_SUCCESS) {
+            //LOGGER.log(Level.INFO, "execute " + consumer);
+            consumer.execute();
+        }
+        return errorState;
+    }
+
+    private RC binaryShift(byte[] bytes, int shift){
         if(shift>0){
             return rightShift(bytes, shift%BITS);
         } else if(shift<0){
@@ -51,8 +83,7 @@ public class BinaryShift implements IExecutor {
         return RC.CODE_SUCCESS;
     }
 
-
-    static private RC rightShift(byte[] bytes, int shift){
+    private RC rightShift(byte[] bytes, int shift){
         if(bytes == null){
             return RC.CODE_INVALID_ARGUMENT;
         }
@@ -63,7 +94,7 @@ public class BinaryShift implements IExecutor {
         return RC.CODE_SUCCESS;
     }
 
-    static private RC leftShift(byte[] bytes, int shift){
+    private RC leftShift(byte[] bytes, int shift){
         if(bytes == null){
             return RC.CODE_INVALID_ARGUMENT;
         }
@@ -75,23 +106,73 @@ public class BinaryShift implements IExecutor {
     }
 
     @Override
-    public RC execute(byte[] data) {
-        LOGGER.log(Level.INFO, "execute binary shift");
-        if(data==null){
-            LOGGER.log(Level.SEVERE, "invalid data argument");
-            return RC.CODE_INVALID_ARGUMENT;
+    public IMediator getMediator(TYPE type) {
+        IMediator obj;
+        switch (type){
+            case BYTE :
+                obj = new ByteMediator();
+                break;
+            case CHAR :
+                obj = new CharMediator();
+                break;
+            case SHORT :
+                obj = new ShortMediator();
+                break;
+            default : throw new IllegalStateException("Unexpected value: " + type);
         }
-        RC errorState = binaryShift(data, Integer.parseInt(config.config.get(BINARY_SHIFT_GRAMMAR.SHIFT_SIZE.toString())));
-        if(errorState==RC.CODE_SUCCESS) {
-            consumer.execute(data);
+        return obj;
+    }
+
+    private TYPE typeIntersection(){
+        TYPE[] target = (producer.getOutputTypes());
+        for (TYPE el:supportedFormats) {
+            for(TYPE target_el:target){
+                if(target_el == el){
+                    return el;
+                }
+            }
         }
-        return errorState;
+        LOGGER.log(Level.SEVERE, "Executor can't get supported format of data");
+        return null;
     }
 
     @Override
-    public RC setConfig(String cfg) {
-        config = new Configer(cfg,BINARY_SHIFT_GRAMMAR.values(),GRAMMAR_SEPARATOR, true, LOGGER);
-        return config.errorState;
+    public TYPE[] getOutputTypes() {
+        return new TYPE[]{TYPE.SHORT,TYPE.CHAR, TYPE.BYTE};
     }
 
+    private class ByteMediator implements IMediator {
+        @Override
+        public Object getData() {
+            if(processed==null) return null;
+            byte[] copy = new byte[processed.length];
+            System.arraycopy(processed, 0, copy, 0, processed.length);
+            return copy;
+        }
+    }
+
+    private class ShortMediator implements IMediator {
+        @Override
+        public Object getData() {
+            if(processed == null) return null;
+            int size = processed.length;
+            ByteBuffer buffer = ByteBuffer.wrap(processed);
+            short[] shortArray = new short[size / 2];
+            for(int index = 0; index < size / 2; ++index) {
+                shortArray[index] = buffer.getShort(2 * index);
+            }
+            if(shortArray.length>0) {
+                return shortArray;
+            }
+            return null;
+        }
+    }
+
+    private class CharMediator implements IMediator {
+        @Override
+        public Object getData() {
+            if(processed==null) return null;
+            return new String(processed, StandardCharsets.UTF_8).toCharArray();
+        }
+    }
 }

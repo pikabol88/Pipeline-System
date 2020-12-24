@@ -7,9 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Marin" level="project" />
-    <orderEntry type="library" name="Smirnova" level="project" />
-    <orderEntry type="library" name="interfaces" level="project" />
     <orderEntry type="module" module-name="Manager" />
+    <orderEntry type="library" name="interfaces" level="project" />
   </component>
 </module>

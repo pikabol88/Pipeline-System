@@ -1,5 +1,4 @@
 import ru.spbstu.pipeline.RC;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,8 +15,8 @@ public class Configer {
     private final List<String> grammar;
     public HashMap<String,String> config;
     private boolean withGrammar;
-    Logger LOGGER;
-    RC errorState;
+    private Logger LOGGER;
+    public RC errorState;
 
     <E extends Enum<E>> Configer(String configFile, Enum<E>[] values, String _splitter, boolean _withGrammar, Logger logger) {
         LOGGER = logger;

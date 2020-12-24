@@ -1,5 +1,4 @@
 import ru.spbstu.pipeline.RC;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,8 +15,8 @@ public class Configer {
     private final List<String> grammar;
     public HashMap<String,String> config;
     private boolean withGrammar;
-    Logger LOGGER;
-    RC errorState;
+    private Logger LOGGER;
+    public RC errorState;
 
     <E extends Enum<E>> Configer(String configFile, Enum<E>[] values, String _splitter, boolean _withGrammar, Logger logger) {
         LOGGER = logger;
@@ -34,6 +33,7 @@ public class Configer {
         for (Enum<E> i : values){
             str.add(i.toString());
         }
+        if(str.size()==0) LOGGER.log(Level.SEVERE, "error with grammar");
         return str;
     }
 
@@ -46,7 +46,7 @@ public class Configer {
             String line;
             LOGGER.log(Level.INFO, "start parsing config file " + file);
             while((line = br.readLine())!=null) {
-                if(withGrammar) parseConfig(line/*.toUpperCase()*/);
+                if(withGrammar) parseConfig(line);
                 else parseConfigWithoutGrammar(line);
             }
             br.close();
@@ -66,7 +66,7 @@ public class Configer {
         LOGGER.log(Level.INFO, "filling config container");
         for(String value: grammar){
             if(value.equals(words[0])){
-                config.put(value, words[1]/*.toLowerCase()*/) ;
+                config.put(value, words[1]) ;
                 break;
             }
         }
@@ -75,7 +75,7 @@ public class Configer {
     private void parseConfigWithoutGrammar(String line) {
         String[] words =  line.split(splitter);
         LOGGER.log(Level.INFO, "filling config container");
-        config.put(words[0], words[1]/*.toLowerCase()*/) ;
+        config.put(words[0], words[1]) ;
     }
 
     private RC checkConfig(){

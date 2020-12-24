@@ -1,7 +1,7 @@
 READER_CFG=Manager/configs/cfg/my_configs/reader_config.txt
 READER_NAME=Reader
 EXECUTORS_FILE=Manager/configs/cfg/my_executor_encode.txt
-WRITER_CFG=Manager/libs/Shagvaliev/configs_workers_my/writerConfig.txt
-WRITER_NAME=mekhails.writer.ByteWriter
+WRITER_CFG=Manager/libs/Timofeev/configs/writer_config.txt
+WRITER_NAME=ru.spbstu.timofeev.workers.FileWriter
 INPUT_FILE=Manager/configs/cfg/input.txt
 OUTPUT_FILE=Manager/configs/cfg/output.txt
