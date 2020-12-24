@@ -1,7 +1,7 @@
 READER_CFG=Manager/configs/cfg/my_configs/reader_config.txt
 READER_NAME=Reader
-EXECUTORS_FILE=Manager/configs/cfg/executors_list.txt
+EXECUTORS_FILE=Manager/configs/cfg/my_executor_decode.txt
 WRITER_CFG=Manager/configs/cfg/my_configs/writer_config.txt
 WRITER_NAME=Writer
-INPUT_FILE=Manager/configs/cfg/input.txt
-OUTPUT_FILE=Manager/configs/cfg/output.txt
+INPUT_FILE=Manager/configs/cfg/output.txt
+OUTPUT_FILE=Manager/configs/cfg/decode.txt

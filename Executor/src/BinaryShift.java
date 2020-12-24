@@ -12,11 +12,11 @@ public class BinaryShift implements IExecutor {
     }
     public static final String GRAMMAR_SEPARATOR = "=";
 
-    Configer config;
+    private Configer config;
     static final int BITS = 8;
     static final int MASK = 0xFF;
-    public IExecutable consumer;
-    public IExecutable producer;
+    private IExecutable consumer;
+    private IExecutable producer;
     private final Logger LOGGER;
 
     public BinaryShift(Logger logger){
@@ -83,7 +83,6 @@ public class BinaryShift implements IExecutor {
         }
         RC errorState = binaryShift(data, Integer.parseInt(config.config.get(BINARY_SHIFT_GRAMMAR.SHIFT_SIZE.toString())));
         if(errorState==RC.CODE_SUCCESS) {
-            //LOGGER.log(Level.INFO, "execute " + consumer);
             consumer.execute(data);
         }
         return errorState;

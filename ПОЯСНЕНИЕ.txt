@@ -1,10 +1,26 @@
-В Manager точка входа - Main
+Теперь проект спокойно запускается из общей папки
+ Точка входа по прежнему в Manager - Main
 
 configs содержит следующие конфиги для мэнеджера
--> my_config - конвейер, собранный только из моих компонент 
+-> my_config_encode/my_config_decode - конвейер, собранный только из моих компонент 
 -> alien_reader_config - конвейер, собранный из своих компонент за исключением Reader'а 
 -> alien_writer_config -конвейер, собранный из своих компонент за исключением Writer'а 
 -> alien_executors_config -конвейер, собранный из своих компонент с добавлением парочки чужих Executor'ов 
+
+
+Для удобства проверки того, что прик кодировании + декодировании информация не пропадает,
+моих работников можно запустить в двух режимах:
+ 1.Manager/configs//my_config_encode.txt (результат сохранится в output.txt)
+ 1.Manager/configs//my_config_decode.txt (результат сохранится в decode.txt)
+
+=> Для запуска разных режимой выполнения неообходимо запустить программу со следующими конфигами:
+1.Manager/configs/my_config_encode.txt или Manager/configs/my_config_decode.txt
+2.Manager/configs/alien_reader_config.txt
+3.Manager/configs/alien_writer_config.txt
+4.Manager/configs/alien_executors_config.txt
+
+
+Пояснения структуры конфигов (ничего существенного, можно не читать, если нет вопросов):
 
 cfg внутри configs - Папка с прочими конфигами
  `  - my_configs - папка с конфигами моих компонент

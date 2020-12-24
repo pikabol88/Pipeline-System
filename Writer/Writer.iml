@@ -7,14 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../interfaces.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Marin" level="project" />
+    <orderEntry type="library" name="Smirnova" level="project" />
+    <orderEntry type="library" name="interfaces" level="project" />
+    <orderEntry type="module" module-name="Manager" />
   </component>
 </module>

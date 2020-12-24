@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Smirnova">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Smirnova/Reader_SmirnovaD.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Smirnova/Encoder_SmirnovaD.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Smirnova/Writer_SmirnovaD.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

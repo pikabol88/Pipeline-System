@@ -32,24 +32,24 @@ public class Manager implements IConfigurable {
     private Configer exConfig;
     private Configer config;
 
-    private String mainCfg;
+    private final String mainCfg;
     private String executorsCfg;
 
     private FileInputStream input;
     private FileOutputStream output;
 
-    private RC errorState = RC.CODE_SUCCESS;
+    private RC errorState;
 
     private IExecutable[] allExecutors;
     private int numOfExecutors;
     private IReader reader ;
-    private IWriter writer;
+    private IWriter writer ;
 
-    byte[] bytes;
+    private byte[] bytes;
 
     public boolean checkSuccess() {
         if (errorState!=RC.CODE_SUCCESS) {
-            LOGGER.log(Level.SEVERE, errorState.getDescription());
+            LOGGER.log(Level.SEVERE, ErrorDescription.getDescription(errorState));
             return  false;
         }
         return  true;
@@ -59,15 +59,14 @@ public class Manager implements IConfigurable {
         mainCfg=configName;
         LOGGER = logger;
         errorState = setConfig(configName);
-        if(checkSuccess()==false){return;}
+        if(!checkSuccess()){return;}
         errorState = setExecutorsConfig(executorsCfg);
-        if(checkSuccess()==false){return;}
+        if(!checkSuccess()){return;}
         errorState = setReader();
-        if(checkSuccess()==false){return;}
+        if(!checkSuccess()){return;}
         errorState = setWriter();
-        if(checkSuccess()==false){return;}
+        if(!checkSuccess()){return;}
         errorState = CreatePipeline(exConfig.config);
-        if(checkSuccess()==false){return;}
     }
 
 

@@ -15,13 +15,14 @@ public class Writer implements IWriter {
     }
     public static final String GRAMMAR_SEPARATOR = "=";
 
-    Configer config;
+    private Configer config;
+    private IExecutable producer;
+    private OutputStream outputStream;
+    private final Logger LOGGER;
 
-    IExecutable producer;
-    OutputStream outputStream;
-    Logger LOGGER;
-
-    int bufferSize;
+    private int bufferSize;
+    private int currentSize = 0;
+    private byte[] buffer;
 
     public Writer(Logger logger) {
         LOGGER = logger;
@@ -37,6 +38,7 @@ public class Writer implements IWriter {
     public RC setConfig(String cfg) {
         config = new Configer(cfg, WRITER_GRAMMAR.values(),GRAMMAR_SEPARATOR, true, LOGGER);
         bufferSize = Integer.parseInt(config.config.get(WRITER_GRAMMAR.BUFFER_SIZE.toString()));
+        buffer = new byte[bufferSize];
         return config.errorState;
     }
 
@@ -62,13 +64,19 @@ public class Writer implements IWriter {
     }
 
 
-    public RC binaryWriter( byte[] buffer){
+    public RC binaryWriter(byte[] data) {
         try {
-            //LOGGER.log(Level.INFO, "writing to the output stream");
-            for(int i = 0; i * bufferSize + bufferSize <= buffer.length - 1; ++i) {
-                outputStream.write(buffer, i * this.bufferSize, this.bufferSize);
+            if(data.length == 0){ outputStream.write(buffer, 0, currentSize);
+            } else if(data.length==bufferSize) { outputStream.write(data, 0, data.length);
+            } else {
+                for (byte b : data) {
+                    buffer[currentSize++] = b;
+                    if (currentSize == bufferSize) {
+                        outputStream.write(buffer, 0, buffer.length);
+                        currentSize = 0;
+                    }
+                }
             }
-            outputStream.write(buffer, 0, buffer.length);
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "failed to write to the input stream");
             return RC.CODE_FAILED_TO_WRITE;

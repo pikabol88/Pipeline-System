@@ -13,7 +13,7 @@ public class Main {
         try {
             LogManager.getLogManager().readConfiguration(Main.class.getResourceAsStream(logConfig));
         } catch (NullPointerException ex){
-            System.out.println(RC.CODE_INVALID_ARGUMENT.getDescription());
+            System.out.println(ErrorDescription.getDescription(RC.CODE_INVALID_ARGUMENT));
         }
         if(args!=null) {
             Manager manager = new Manager(LOGGER, args[0]);
@@ -24,8 +24,8 @@ public class Main {
             }
         }
         else {
-            System.out.println(RC.CODE_INVALID_ARGUMENT.getDescription());
-            LOGGER.log(Level.SEVERE, RC.CODE_INVALID_ARGUMENT.getDescription());
+            System.out.println(ErrorDescription.getDescription(RC.CODE_INVALID_ARGUMENT));
+            LOGGER.log(Level.SEVERE, ErrorDescription.getDescription(RC.CODE_INVALID_ARGUMENT));
         }
     }
 }

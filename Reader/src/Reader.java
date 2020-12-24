@@ -15,12 +15,12 @@ public class Reader implements IReader {
     }
     public static final String GRAMMAR_SEPARATOR = "=";
 
-    Configer config;
-    IExecutable consumer;
-    InputStream inputStream;
+    private Configer config;
+    private IExecutable consumer;
+    private InputStream inputStream;
 
     public int bufferSize;
-    Logger LOGGER;
+    private final Logger LOGGER;
 
     public Reader(Logger logger){
         LOGGER = logger;
@@ -56,12 +56,10 @@ public class Reader implements IReader {
 
     @Override
     public RC execute(byte[] data) {
-        data = new byte[bufferSize];
-        byte[] buffer  = new byte[0];
+        byte[] buffer;
         do {
-            LOGGER.log(Level.INFO, "execute reader");
             try {
-                buffer  = binaryReader(data);
+                buffer  = binaryReader();
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, "failed to read from the input stream");
                 return RC.CODE_FAILED_TO_READ;
@@ -73,11 +71,10 @@ public class Reader implements IReader {
         return RC.CODE_SUCCESS;
     }
 
-    public byte[] binaryReader(byte[] data) throws IOException {
-        int count = 0;
+    public byte[] binaryReader() throws IOException {
+        int count;
         byte[] buffer = new byte[bufferSize];
         while((count = inputStream.read(buffer) )!= -1) {
-            // LOGGER.log(Level.INFO, "reading from input stream to buffer");
             if(count!= bufferSize){
                 return  deleteZero(buffer, count);
             }

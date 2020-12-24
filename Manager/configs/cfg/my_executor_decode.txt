@@ -1,0 +1,1 @@
+BinaryShift=Manager/configs/cfg/my_configs/executor_decoder.txt
