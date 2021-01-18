@@ -1,5 +1,5 @@
-READER_CFG=Manager/libs/Antonov/configs/Reader_cfg.txt
-READER_NAME=ru.spbstu.Antonov_Aleksei.Reader
+READER_CFG=Manager/configs/cfg/my_configs/reader_config.txt
+READER_NAME=Reader
 EXECUTORS_FILE=Manager/configs/cfg/my_executor.txt
 WRITER_CFG=Manager/configs/cfg/my_configs/writer_config.txt
 WRITER_NAME=Writer

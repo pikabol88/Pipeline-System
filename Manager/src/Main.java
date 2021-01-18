@@ -10,7 +10,7 @@ public class Main {
     public static final Logger LOGGER = Logger.getLogger(Logger.class.getName());
     public static final String logConfig = "/logging.properties";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         try {
             LogManager.getLogManager().readConfiguration(Main.class.getResourceAsStream(logConfig));
         } catch (NullPointerException ex){

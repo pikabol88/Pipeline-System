@@ -17,6 +17,8 @@ public class Configer {
     private boolean withGrammar;
     private Logger LOGGER;
     public RC errorState;
+    public String repeatInd = "repInd";
+    private int repetitive = 0;
 
     <E extends Enum<E>> Configer(String configFile, Enum<E>[] values, String _splitter, boolean _withGrammar, Logger logger) {
         LOGGER = logger;
@@ -75,6 +77,10 @@ public class Configer {
     private void parseConfigWithoutGrammar(String line) {
         String[] words =  line.split(splitter);
         LOGGER.log(Level.INFO, "filling config container");
+        if(config.get(words[0])!=null){
+            words[0]+= repeatInd+repetitive;
+            repetitive++;
+        }
         config.put(words[0], words[1]) ;
     }
 

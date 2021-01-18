@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="Executor">
+  <library name="Writer1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Manager/artefacts/Executor.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Manager/libs/Antonov/Writer.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

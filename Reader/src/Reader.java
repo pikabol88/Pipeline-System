@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,17 +18,27 @@ public class Reader implements IReader {
     }
     public static final String GRAMMAR_SEPARATOR = "=";
 
-    private IConsumer consumer;
-
+    INotifier notifier;
     public Configer config;
     private Logger LOGGER;
 
     private InputStream inputStream;
-    private byte[] processed;
     private int bufferSize;
+    private int currentChunk = 0;
+    private final HashMap<Integer, byte[]> chunks = new HashMap<>();
 
     public Reader(Logger logger){
         LOGGER = logger;
+    }
+
+    @Override
+    public void run() {
+        RC state=RC.CODE_SUCCESS;
+        state = execute();
+        if (state!=RC.CODE_SUCCESS) {
+            LOGGER.log(Level.SEVERE, ErrorDescription.getDescription(state));
+        }
+        LOGGER.log(Level.INFO, "reader throw processing is finished");
     }
 
     @Override
@@ -43,47 +55,43 @@ public class Reader implements IReader {
     }
 
     @Override
-    public RC setConsumer(IConsumer iConsumer) {
-        if(iConsumer==null) {
-            LOGGER.log(Level.SEVERE, "invalid consumer object");
-            return RC.CODE_INVALID_ARGUMENT;
-        }
-        consumer = iConsumer;
+    public RC addNotifier(INotifier iNotifier) {
+        notifier = iNotifier;
         return RC.CODE_SUCCESS;
     }
 
-    @Override
-    public RC setProducer(IProducer iProducer) {
-        return RC.CODE_SUCCESS;
-    }
 
-    @Override
     public RC execute() {
-        processed = new byte[bufferSize];
+        LOGGER.log(Level.INFO, "start reader execution");
         byte[] buffer;
         do {
             try {
-                buffer  = binaryReader();
+                buffer = binaryReader();
+                chunks.put(currentChunk, buffer);
+                notifier.notify(currentChunk);
+               // System.out.println("read "+currentChunk +" "+ Arrays.toString(buffer));
+                currentChunk++;
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, "failed to read from the input stream");
                 return RC.CODE_FAILED_TO_READ;
             }
-            processed = buffer;
-            consumer.execute();
-        } while(buffer != null);
+        } while (buffer != null);
+        LOGGER.log(Level.INFO, "end reader execution");
         return RC.CODE_SUCCESS;
     }
 
+
     public byte[] binaryReader() throws IOException {
-        int count;
+
         byte[] buffer = new byte[bufferSize];
-        while((count = inputStream.read(buffer) )!= -1) {
-            if(count!= bufferSize){
-                return  deleteZero(buffer, count);
+        int currentSize = 0;
+        while((currentSize = inputStream.read(buffer) )!= -1) {
+            if(currentSize != bufferSize){
+                return deleteZero(buffer, currentSize);
             }
             return buffer;
         }
-        return  null;
+        return null;
     }
 
     private byte[] deleteZero(byte[] bytes, int size){
@@ -112,26 +120,37 @@ public class Reader implements IReader {
 
     private class ByteMediator implements IMediator {
         @Override
-        public Object getData() {
-            if(processed==null) return null;
-            byte[] copy = new byte[processed.length];
-            System.arraycopy(processed, 0, copy, 0, processed.length);
-            return copy;
+        public Object getData(int i) {
+            if(chunks.size()>0) {
+                byte[] partOfOutput = chunks.get(i);
+                chunks.remove(i);
+                if (partOfOutput == null) {
+                    return null;
+                }
+                byte[] copy = new byte[partOfOutput.length];
+                System.arraycopy(partOfOutput, 0, copy, 0, partOfOutput.length);
+                return copy;
+            }
+            return null;
         }
     }
 
     private class ShortMediator implements IMediator {
         @Override
-        public Object getData() {
-            if(processed==null) return null;
-            int size = processed.length;
-            ByteBuffer buffer = ByteBuffer.wrap(processed);
-            short[] shortArray = new short[size / 2];
-            for(int index = 0; index < size / 2; ++index) {
-                shortArray[index] = buffer.getShort(2 * index);
-            }
-            if(shortArray.length>0) {
-                return shortArray;
+        public Object getData(int i) {
+            if(chunks.size()>0) {
+                byte[] partOfOutput = chunks.get(i);
+                chunks.remove(i);
+                if (partOfOutput == null) return null;
+                int size = partOfOutput.length;
+                ByteBuffer buffer = ByteBuffer.wrap(partOfOutput);
+                short[] shortArray = new short[size / 2];
+                for (int index = 0; index < size / 2; ++index) {
+                    shortArray[index] = buffer.getShort(2 * index);
+                }
+                if (shortArray.length > 0) {
+                    return shortArray;
+                }
             }
             return null;
         }
@@ -139,9 +158,14 @@ public class Reader implements IReader {
 
     private class CharMediator implements IMediator {
         @Override
-        public Object getData() {
-            if(processed==null) return null;
-            return new String(processed, StandardCharsets.UTF_8).toCharArray();
+        public Object getData(int i) {
+            if (chunks.size() > 0) {
+                byte[] partOfOutput = chunks.get(i);
+                chunks.remove(i);
+                if (partOfOutput == null) return null;
+                return new String(partOfOutput, StandardCharsets.UTF_8).toCharArray();
+            }
+            return null;
         }
     }
 }

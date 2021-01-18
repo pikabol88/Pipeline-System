@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="Executor">
+  <library name="interfaces">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Manager/artefacts/Executor.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../interfaces.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

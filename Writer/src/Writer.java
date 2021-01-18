@@ -4,6 +4,9 @@ import ru.spbstu.pipeline.RC;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,9 +29,29 @@ public class Writer implements IWriter {
     private int currentSize = 0;
     private byte[] buffer;
 
+    public ArrayList<Integer> accepted_chunks = new ArrayList<>();
+    private int currentChunk = 0;
+    private  boolean isDone = false;
+
     public Writer(Logger logger) {
         LOGGER = logger;
     }
+
+    @Override
+    public void run() {
+        RC state=RC.CODE_SUCCESS;
+        do {
+            if(accepted_chunks.contains(currentChunk)){
+                state = execute();
+                if (state!=RC.CODE_SUCCESS) {
+                    LOGGER.log(Level.SEVERE, ErrorDescription.getDescription(state));
+                }
+                currentChunk++;
+            }
+        } while (!isDone);
+        LOGGER.log(Level.INFO, "writer throw processing is finished");
+    }
+
 
     @Override
     public RC setOutputStream(FileOutputStream fos) {
@@ -45,8 +68,8 @@ public class Writer implements IWriter {
     }
 
     @Override
-    public RC setConsumer(IConsumer iConsumer) {
-        return RC.CODE_SUCCESS;
+    public RC addNotifier(INotifier iNotifier) {
+        return null;
     }
 
     @Override
@@ -77,10 +100,19 @@ public class Writer implements IWriter {
         return null;
     }
 
-    @Override
+
     public RC execute() {
-        byte[] data = (byte[])mediator.getData();
+        byte[] data = (byte[])mediator.getData(currentChunk);
+       // System.out.println("write " + currentChunk + " = " + Arrays.toString(data));
+        if (data == null){
+            isDone = true;
+        }
         return binaryWriter(data);
+    }
+
+    @Override
+    public INotifier getNotifier() {
+        return new Notifier();
     }
 
     public RC binaryWriter(byte[] data) {
@@ -104,5 +136,18 @@ public class Writer implements IWriter {
             return RC.CODE_FAILED_TO_WRITE;
         }
         return RC.CODE_SUCCESS;
+    }
+
+
+    private class Notifier implements INotifier {
+        @Override
+        public RC notify(int idChunk) {
+            if (accepted_chunks.contains(idChunk)) {
+                return RC.CODE_WARNING_CHUNK_ALREADY_TAKEN;
+            } else {
+                accepted_chunks.add(idChunk);
+                return RC.CODE_SUCCESS;
+            }
+        }
     }
 }

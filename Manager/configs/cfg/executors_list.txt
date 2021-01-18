@@ -1,3 +1,2 @@
-executor.Worker=Manager/libs/Marin/configs/executor_cfg.txt
+ru.spbstu.Antonov_Aleksei.XOR_Encoder=Manager/libs/Antonov/configs/XOR_cfg.txt
 BinaryShift=Manager/configs/cfg/my_configs/executor_decoder.txt
-ru.spbstu.timofeev.workers.Substitutor=Manager/libs/Timofeev/configs/executor_config.txt
