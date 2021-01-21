@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="21428e31-7f75-4c6b-9092-5d0fa7bcf205" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Executor/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Executor/.idea/artifacts/Executor_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Executor/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Executor/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Executor/Executor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Executor/Executor.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Executor/src/BinaryShift.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Executor/src/BinaryShift.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Executor/src/Configer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Executor/src/Configer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/Manager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/Manager.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/alien_executors_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/alien_executors_config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/alien_reader_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/alien_reader_config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/alien_writer_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/alien_writer_config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/cfg/executors_list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/cfg/executors_list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/cfg/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/cfg/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/cfg/my_configs/reader_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/cfg/my_configs/reader_config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/cfg/my_executor.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/cfg/my_executor.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/cfg/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/cfg/output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/configs/my_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/configs/my_config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Marin/my_cfg/executor_cfg.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Marin/my_cfg/reader_cfg.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Marin/my_cfg/writer_cfg.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Shagvaliev/configs_workers_my/example_complete_pipeline.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Shagvaliev/configs_workers_my/executorConfig.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Shagvaliev/configs_workers_my/readerConfig.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Shagvaliev/configs_workers_my/writerConfig.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Smirnova/app1config1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Smirnova/app1config2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Smirnova/readerconfig.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/libs/Smirnova/writerconfig.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/out/production/Manager/logging.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/Configer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/src/Configer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/src/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/RC.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Manager/src/ErrorDescription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/IConfigurable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/IExecutable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/IExecutor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/IPipelineStep.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/IReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/IWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Manager/src/ru/spbstu/pipeline/RC.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Reader_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reader.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Configer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Configer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/.idea/artifacts/Writer_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/Writer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Writer/Writer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/src/Configer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Writer/src/Configer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Writer/src/Writer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Writer/src/Writer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ПОЯСНЕНИЕ.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ПОЯСНЕНИЕ.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1nGOAbDSRRiYl0xJCRY53LA22xq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Writer" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="21428e31-7f75-4c6b-9092-5d0fa7bcf205" name="Default Changelist" comment="" />
+      <created>1611012817919</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611012817919</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1611012825261">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1611012825261" />
+  </component>
+</project>

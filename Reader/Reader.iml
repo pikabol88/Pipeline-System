@@ -7,12 +7,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="interfaces" level="project" />
-    <orderEntry type="library" name="Executor" level="project" />
-    <orderEntry type="library" name="Reader" level="project" />
-    <orderEntry type="library" name="Writer" level="project" />
-    <orderEntry type="library" name="Executor1" level="project" />
-    <orderEntry type="library" name="Reader1" level="project" />
-    <orderEntry type="library" name="Writer1" level="project" />
   </component>
 </module>
